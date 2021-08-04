@@ -9,9 +9,9 @@ public abstract class Vehiculo {
     private String marca;
     private String modelo;
     private Double precioBase;
-
+    Vehiculo vehiculo;
     private Motocicleta motocicleta;
-    private Automovil automovil;
+
 
     public Vehiculo(String marca, String modelo, Double precioBase) {
         this.marca = marca;
@@ -32,23 +32,24 @@ public abstract class Vehiculo {
         String marca = getMarca();
         Double descuento = 0.0;
 
-        if (mes == Calendar.MAY && marca.equals(getMarca())) {
+        if (mes == Calendar.MAY && marca == "Mazda") {
             Double precioBase = getPrecioBase();
             descuento = precioBase - ((10 * precioBase) / 100);
 
-        } else if (mes == Calendar.JUNE && marca.equals(getMarca())) {
+        } else if (mes == Calendar.JUNE && marca == "BMW") { 
+            if (equals(motocicleta)) {
+                Double precioBase = getPrecioBase();
+                descuento = precioBase - ((10 * precioBase) / 100); 
+                System.out.println("hey si pasamos aca");
 
-            if (marca.equals(automovil.getMarca())) {
-                Double precioBase = automovil.getPrecioBase();
+            } else {
+                Double precioBase = getPrecioBase();
                 descuento = precioBase - ((5 * precioBase) / 100);
-            } else if (marca.equals(motocicleta.getMarca())) {
-                Double precioBase = automovil.getPrecioBase();
-                descuento = precioBase - ((10 * precioBase) / 100);
 
             }
-
+        
         }
-
+       
         return descuento;
 
     }
@@ -76,5 +77,7 @@ public abstract class Vehiculo {
     public void setPrecioBase(Double precioBase) {
         this.precioBase = precioBase;
     }
+
+    
 
 }

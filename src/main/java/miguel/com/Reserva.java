@@ -1,15 +1,18 @@
 package miguel.com;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Reserva {
 
     private Date fecha;
     private String cliente;
 
-    private Vehiculo vehiculo;
+    private ArrayList<Vehiculo> vehiculos = new ArrayList<>();
     
     Integer cantidadVehiculos = 0;
+   
 
 
     
@@ -29,30 +32,41 @@ public class Reserva {
     }
 
     public void adicionarVehiculo(Vehiculo vehiculo) {
-        calcularCantidadVehiculos();
+            vehiculos = (ArrayList<Vehiculo>) getVehiculos();
+            var añadir = vehiculos.add(vehiculo);
     }
 
     public Integer calcularCantidadVehiculos() {
-        
-        cantidadVehiculos= cantidadVehiculos + 1 ;
-        return cantidadVehiculos;
+       return vehiculos.size();
     }
 
     public Double calcularSubtotal() {
         Double subtotal  = 0.0;
-        subtotal += vehiculo.calcularPrecio();
+
+        for (var vehiculo : vehiculos) {
+            subtotal += vehiculo.calcularPrecio(); 
+        }
+        
         return subtotal;
     }
 
     public Double calcularDescuentos() {
         Double descuentos = 0.0;
-        descuentos += vehiculo.calcularPorcentajeImpuesto();
+        for (var vehiculo : vehiculos) {
+            descuentos += vehiculo.calcularDescuento(getFecha());  
+            
+        }
+        
+        
         return descuentos;
     }
 
     public Double calcularImpuestos() {
         Double impuestos = 0.0;
-        impuestos += calcularImpuestos();
+        for (Vehiculo vehiculo : vehiculos) {
+            impuestos += vehiculo.calcularPorcentajeImpuesto();  
+        }
+        
         return impuestos;
     }
 
@@ -63,6 +77,19 @@ public class Reserva {
     public String getCliente() {
         return cliente;
     }
+
+    public List<Vehiculo> getVehiculos() {
+        return vehiculos;
+    }
+
+    public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
+
+  
+
+    
 
 
 
