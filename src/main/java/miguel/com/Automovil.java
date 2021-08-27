@@ -17,9 +17,9 @@ public class Automovil extends Vehiculo {
     public Double calcularPrecio() {
 
         Double precioBase = getPrecioBase();
-        transmision = TipoTransmision.AUTOMATICA;
+       // var transmision_vehiculo = TipoTransmision.AUTOMATICA;
 
-        if (getTransmision() != transmision) {
+        if (getTransmision() == TipoTransmision.AUTOMATICA) {
             precioBase = precioBase + ((7 * precioBase) / 100);
         }
 
@@ -31,7 +31,7 @@ public class Automovil extends Vehiculo {
             precioBase = precioBase + 2500000;
 
         }
-
+        setPrecioBase(precioBase);
         return precioBase;
     }
 
@@ -39,7 +39,7 @@ public class Automovil extends Vehiculo {
         Double precioBase = getPrecioBase();
         Double impuesto = 0.0;
         if ( precioBase > 80000000){
-           impuesto = precioBase + ((precioBase * 19)/100);
+           impuesto =  precioBase * 19 / 100;
             
 
         }

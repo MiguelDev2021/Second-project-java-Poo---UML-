@@ -9,6 +9,8 @@ public class Motocicleta extends Vehiculo {
         this.cilindraje = cilindraje;
     }
 
+    
+
     public Double calcularPrecio() {
         Double precioBase = getPrecioBase();
         Double cilindraje = getCilindraje();
@@ -24,7 +26,7 @@ public class Motocicleta extends Vehiculo {
             precioBase += 1200000;
 
         }
-
+        setPrecioBase(precioBase);
         return precioBase;
     }
 
@@ -32,7 +34,7 @@ public class Motocicleta extends Vehiculo {
         Double precioBase = getPrecioBase();
         Double impuesto = 0.0;
         if (precioBase > 6100000) {
-            impuesto = precioBase + ((precioBase * 19) / 100);
+            impuesto = (precioBase * 19) / 100;
 
         }
 

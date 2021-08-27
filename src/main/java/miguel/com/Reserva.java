@@ -10,13 +10,8 @@ public class Reserva {
     private String cliente;
 
     private ArrayList<Vehiculo> vehiculos = new ArrayList<>();
-    
-    Integer cantidadVehiculos = 0;
-   
 
-
-    
-
+    Double total = 0.0;
 
     public Reserva(Date fecha, String cliente) {
         this.setFecha(fecha);
@@ -32,46 +27,49 @@ public class Reserva {
     }
 
     public void adicionarVehiculo(Vehiculo vehiculo) {
-            vehiculos = (ArrayList<Vehiculo>) getVehiculos();
-            var añadir = vehiculos.add(vehiculo);
+        vehiculos = (ArrayList<Vehiculo>) getVehiculos();
+        var añadir = vehiculos.add(vehiculo);
     }
 
     public Integer calcularCantidadVehiculos() {
-       return vehiculos.size();
+        return vehiculos.size();
     }
 
     public Double calcularSubtotal() {
-        Double subtotal  = 0.0;
+        Double subtotal = 0.0;
 
         for (var vehiculo : vehiculos) {
-            subtotal += vehiculo.calcularPrecio(); 
+            Double precio_vehiculo = vehiculo.calcularPrecio();
+            subtotal += precio_vehiculo;
         }
-        
+        total += subtotal;
         return subtotal;
     }
 
     public Double calcularDescuentos() {
         Double descuentos = 0.0;
         for (var vehiculo : vehiculos) {
-            descuentos += vehiculo.calcularDescuento(getFecha());  
-            
+            Boolean tipovehiculo = vehiculo instanceof Automovil;
+            descuentos += vehiculo.calcularDescuento(getFecha(), tipovehiculo);
+
         }
-        
-        
+
+        total -= descuentos;
         return descuentos;
     }
 
     public Double calcularImpuestos() {
         Double impuestos = 0.0;
         for (Vehiculo vehiculo : vehiculos) {
-            impuestos += vehiculo.calcularPorcentajeImpuesto();  
+            impuestos += vehiculo.calcularPorcentajeImpuesto();
         }
-        
+        total += impuestos;
         return impuestos;
     }
 
     public Double calcularTotal() {
-        return calcularSubtotal() - calcularDescuentos() + calcularImpuestos();
+
+        return total;
     }
 
     public String getCliente() {
@@ -85,14 +83,5 @@ public class Reserva {
     public void setVehiculos(ArrayList<Vehiculo> vehiculos) {
         this.vehiculos = vehiculos;
     }
-
-
-  
-
-    
-
-
-
-   
 
 }

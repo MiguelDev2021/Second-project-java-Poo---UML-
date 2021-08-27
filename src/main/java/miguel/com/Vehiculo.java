@@ -9,9 +9,8 @@ public abstract class Vehiculo {
     private String marca;
     private String modelo;
     private Double precioBase;
-    Vehiculo vehiculo;
-    private Motocicleta motocicleta;
-
+   
+    
 
     public Vehiculo(String marca, String modelo, Double precioBase) {
         this.marca = marca;
@@ -23,7 +22,7 @@ public abstract class Vehiculo {
 
     public abstract Double calcularPorcentajeImpuesto();
 
-    public Double calcularDescuento(Date fecha) {
+    public Double calcularDescuento(Date fecha, Boolean tipovehiculo) {
         // Extrae el mes de la fecha actual.
         // Para comparar use las constantes Calendar.JULY o Calendar.JUNE
         var cal = GregorianCalendar.getInstance();
@@ -31,25 +30,24 @@ public abstract class Vehiculo {
         var mes = cal.get(Calendar.MONTH);
         String marca = getMarca();
         Double descuento = 0.0;
+        var precioRealvehiculo =  getPrecioBase();
 
         if (mes == Calendar.MAY && marca == "Mazda") {
-            Double precioBase = getPrecioBase();
-            descuento = precioBase - ((10 * precioBase) / 100);
+            descuento = (10 * precioRealvehiculo) / 100;
 
         } else if (mes == Calendar.JUNE && marca == "BMW") { 
-            if (equals(motocicleta)) {
-                Double precioBase = getPrecioBase();
-                descuento = precioBase - ((10 * precioBase) / 100); 
-                System.out.println("hey si pasamos aca");
-
+            if (tipovehiculo) {
+               
+                descuento =  (5 * precioRealvehiculo) / 100; 
             } else {
-                Double precioBase = getPrecioBase();
-                descuento = precioBase - ((5 * precioBase) / 100);
+                
+                descuento = (10 * precioRealvehiculo) / 100;
 
             }
+           
         
         }
-       
+        setPrecioBase(precioRealvehiculo - descuento);
         return descuento;
 
     }
@@ -77,6 +75,10 @@ public abstract class Vehiculo {
     public void setPrecioBase(Double precioBase) {
         this.precioBase = precioBase;
     }
+
+
+    
+
 
     
 
